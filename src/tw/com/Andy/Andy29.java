@@ -10,10 +10,10 @@ public class Andy29 {
 	}
 
 }
-class Andy291 implements Andy26 {
-	public void m1() {
-		
-	}
+//class Andy291 implements Andy26 {
+//	public void m1() {
+//		
+//	}
 	
 	
-}
+//}
