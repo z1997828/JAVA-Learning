@@ -6,9 +6,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.DebugGraphics;
 import javax.swing.JPanel;
 
@@ -90,5 +100,45 @@ public class MyPanel extends JPanel {
 			repaint();
 		}
 	}
+	public void saveObj(File file) throws Exception {
+		ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(file));
+		
+		oout.writeObject(lines);
+		oout.flush();
+		oout.close();
+	}
+	
+	public void loadObj(File file) throws Exception{
+		ObjectInputStream oin = new ObjectInputStream(new FileInputStream(file));
+		Object obj = oin.readObject();		
+		
+		
+		if (obj instanceof LinkedList) {
+			lines = (LinkedList<LinkedList<HashMap<String, Integer>>>)obj;
+			repaint();
+		} else {
+			throw new Exception("err04");
+		}
+		oin.close();
+	}
+	
+	public void saveJPEG() {
+		BufferedImage img = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+		
+		Graphics g = img.getGraphics();
+		paint(g);
+		
+		try {
+			ImageIO.write(img, "jpg",new File("dir1/Andy.jpg"));
+			
+			System.out.println("成功");
+			
+			
+		} catch (IOException e) {
+			System.out.println("失敗");
+		}
+	}
+	
+	
+	
 }
- 
