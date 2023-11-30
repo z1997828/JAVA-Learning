@@ -13,13 +13,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import tw.Andy.classes.AndyClock;
 import tw.Andy.classes.MyPanel;
 import tw.Andy.classes.MyPanelV2;
 
 public class MySign extends JFrame {
 	private MyPanel myPanel;
 	private JButton clear, undo, redo, color, saveObj, loadObj,saveJPG;
-
+	private AndyClock clock;
 	public MySign() {
 		super("簽名App");
 
@@ -45,7 +46,11 @@ public class MySign extends JFrame {
 		
 		saveJPG = new JButton("saveJPG");
 		top.add(saveJPG);
-
+		
+		clock = new AndyClock();
+		top.add(clock);
+		
+		
 		add(top, BorderLayout.NORTH);
 
 		setSize(640, 480);
@@ -116,8 +121,15 @@ public class MySign extends JFrame {
 		
 		saveJPG.addActionListener(new ActionListener() {
 			
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
+				new Thread() {
+					public void run() {
+						myPanel.saveJPEG();
+					}
+				}.start();
+				
+				
 				
 				JFileChooser jfc = new JFileChooser();
 				if(jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
