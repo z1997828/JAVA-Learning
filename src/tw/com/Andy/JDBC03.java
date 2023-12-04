@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import org.json.JSONArray;
@@ -44,7 +45,14 @@ public class JDBC03 {
 		prop.put("user", "root");
 		prop.put("password", "root");
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/andy", prop)) {
-
+			
+			Statement stmt = conn.createStatement();
+			
+			stmt.executeUpdate("DELETE FROM food");
+			
+			stmt.executeUpdate("ALTER TABLE food AUTO_INCREMENT = 1");
+			
+			
 			String sql = "INSERT INTO food(name,addr,tel,pic,lat,lng) VALUE(?,?,?,?,?,?)";
 			// 處理隱碼攻擊的API
 			PreparedStatement pstmt = conn.prepareStatement(sql);
