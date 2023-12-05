@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.util.Properties;
 import java.util.Scanner;
 
+import org.json.JSONStringer;
+import org.json.JSONWriter;
+
 import tw.Andy.classes.BCrypt;
 import tw.Andy.classes.Member;
 
@@ -31,7 +34,7 @@ public class JDBC08 {
 		Properties prop = new Properties();
 		prop.put("user", USER);
 		prop.put("password", PASSWD);
-		// hw 產生member陣列
+		// 產生member陣列
 		try {
 			conn = DriverManager.getConnection(URL, prop);
 			// check account
@@ -39,6 +42,14 @@ public class JDBC08 {
 			if ((member = login(account, passwd)) != null) {
 				System.out.println("Welcome, " + member.getCname());
 			
+				
+				JSONStringer js = new JSONStringer();
+				JSONWriter jw = js.object();
+				js.key("id").value(member.getId());
+				js.key("account").value(member.getAccount());
+				js.endObject();
+				System.out.println(jw.toString());
+				
 				System.out.print("New Password: ");
 				String newpasswd = scanner.next();
 				if (chPasswd(member, newpasswd)) {

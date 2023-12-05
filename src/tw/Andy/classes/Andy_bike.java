@@ -1,6 +1,8 @@
 package tw.Andy.classes;
 
-public class Andy_bike extends Object{
+import java.io.Serializable;
+
+public class Andy_bike extends Object implements Serializable{
 	// 屬性 = 全小寫
 	// 方法 = 介係詞小寫，後面首字大寫
 	
